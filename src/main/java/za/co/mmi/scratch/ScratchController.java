@@ -1,7 +1,6 @@
 package za.co.mmi.scratch;
 
-import org.apache.poi.xslf.usermodel.XMLSlideShow;
-import org.apache.poi.xslf.usermodel.XSLFSlide;
+import org.apache.poi.xslf.usermodel.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.slf4j.Logger;
@@ -41,15 +40,26 @@ public class ScratchController {
 
             bout = new ByteArrayOutputStream();
             XMLSlideShow ppt = new XMLSlideShow();
+            XSLFSlideMaster defaultMaster = ppt.getSlideMasters().get(0);
+            XSLFSlideLayout layout = defaultMaster.getLayout(SlideLayout.TITLE_AND_CONTENT);
 
             JSONArray jsonarray = new JSONArray(json);
             for (int i = 0; i < jsonarray.length(); i++) {
+
                 JSONObject jsonobject = jsonarray.getJSONObject(i);
                 String title = jsonobject.getString("title");
                 log.debug(" -- title " + title);
                 String content = jsonobject.getString("content");
                 log.debug(" -- content:" + content);
-                XSLFSlide blankSlide = ppt.createSlide();
+
+                XSLFSlide blankSlide = ppt.createSlide(layout);
+
+                XSLFTextShape titleShape = blankSlide.getPlaceholder(0);
+                XSLFTextShape contentShape = blankSlide.getPlaceholder(1);
+
+                titleShape.setText(title);
+                contentShape.setText(content);
+
             }
 
             ppt.write(bout);
