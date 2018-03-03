@@ -15,8 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 
 @Controller
@@ -33,7 +31,7 @@ public class ScratchController {
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.parseMediaType("application/vnd.openxmlformats-officedocument.presentationml.presentation"));
-        headers.setContentDispositionFormData("output.pptx", "output.pptx");
+        headers.setContentDispositionFormData("export.pptx", "export.pptx");
         headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
 
         try {
