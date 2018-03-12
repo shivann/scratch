@@ -23,6 +23,12 @@ public class ScratchController {
 
     private static final Logger log = LoggerFactory.getLogger(ScratchController.class);
 
+    @RequestMapping(value="/hello", method= RequestMethod.POST)
+    public ResponseEntity<String> hello(@RequestBody String message) {
+        System.out.println(" -- Message is " + message);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
     @RequestMapping(value="/getppt", method= RequestMethod.POST)
     public ResponseEntity<byte[]> getPDF(@RequestBody String json) {
         log.debug(" -- received json payload " + json);
